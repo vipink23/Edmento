@@ -1,13 +1,18 @@
-"use client";
-import Course from "@/Components/Course";
-import { useState } from "react";
+import CourseList from "@/Components/Course"; // your client component
+import Sidebar from "@/Components/Sidebar";
+import WithDelayLoading from "../loading";
 
-const page = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+export default async function Page() {
+  const res = await fetch("http://localhost:3000/api/course", {
+    cache: "no-store", // or 'force-cache' depending on your caching needs
+  });
 
-  const toggleSubmenu = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  if (!res.ok) {
+    throw new Error("Failed to fetch courses");
+  }
+
+  const courses = await res.json();
+
   return (
     <>
       <div className="bg-gradient-to-r from-blue-400 via-blue-900 to-blue-950">
@@ -25,48 +30,18 @@ const page = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row w-full min-h-screen">
-        {/* Sidebar */}
-        <div className="text-blue-900 px-2 py-6 w-full lg:w-1/6 bg-white border border-slate-300">
-          <ul className="text-white px-9 cursor-pointer">
-            {["Programs", "Science", "Accademic Center", "History"].map(
-              (subject, index) => (
-                <li
-                  key={index}
-                  className="mb-2 text-blue-900 gap-4 cursor-pointer"
-                >
-                  <button
-                    onClick={() => toggleSubmenu(index)}
-                    className="w-full text-left font-bold transition-transform duration-200 hover:scale-105 flex justify-between items-end cursor-pointer"
-                  >
-                    {subject}
-                  </button>
-                  {openIndex === index && (
-                    <ul className="ml-4 mt-2 rounded p-2 text-sm text-blue-900">
-                      <li className="hover:underline cursor-pointer">
-                        Chapter 1
-                      </li>
-                      <li className="hover:underline cursor-pointer">
-                        Chapter 2
-                      </li>
-                      <li className="hover:underline cursor-pointer">
-                        Chapter 3
-                      </li>
-                    </ul>
-                  )}
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+      <WithDelayLoading>
+        <div className="flex flex-col lg:flex-row w-full min-h-screen">
+          {/* Sidebar */}
+          <Sidebar />
 
-        {/* Main Content */}
-        <div className="w-full lg:w-3/4 p-4">
-          <Course />
+          {/* Main content */}
+          <div className="w-full lg:w-3/4 p-4 lg:mx-20 sm:mx-2">
+            <div className="justify-center text-center font-bold mb-2">Course</div>
+            <CourseList initialCourses={courses} />
+          </div>
         </div>
-      </div>
+      </WithDelayLoading>
     </>
   );
-};
-
-export default page;
+}

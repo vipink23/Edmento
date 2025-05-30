@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Course Detail Page with AI Summarizer – Next.js + TypeScript (TSX) + Tailwind CSS
 
-## Getting Started
+This project demonstrates a **Course Detail Page** with dynamic routing in **Next.js**, simulating AI-powered content summarization for learning content. It is fully implemented with **TypeScript (TSX)** and leverages **Tailwind CSS** for styling.
 
-First, run the development server:
+### Assumptions Made
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> Dummy Course Data is hardcoded in the project (e.g., course-1, course-2).
+> The AI Summarizer is simulated with a local /api/summarize route returning a hardcoded summary based on the course title.
+> Styling is implemented with Tailwind CSS, providing utility-first classes for layout, spacing, and design.
+> Routing uses Next.js file-based dynamic routing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Design Decisions & Trade-offs
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Dynamic Routing: Implemented using [courseId].tsx for dynamic course detail pages.
+> TypeScript (TSX): Strong typing is used throughout the project, including:
+> Props and state definitions
+> API response types (e.g., summary response)
+> Component types for Next.js pages and functional components
+> Simulated API: The /api/summarize endpoint is mocked with a hardcoded summary string for demonstration purposes.
+> Tailwind CSS: Used for responsive and consistent design.
+> No Backend: All data and APIs are mocked within Next.js.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### AI Integration Simulation
 
-## Learn More
+> The button "Ask AI to Summarize This Content" triggers a POST request to /api/summarize.
+> This API returns a simple, hardcoded summary like:
+> "This content discusses the key principles of [Course Title]."
+> This demonstrates how a real LLM integration (e.g., OpenAI's GPT) would work in production.
 
-To learn more about Next.js, take a look at the following resources:
+### AI Prompting & Efficiency
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I used ChatGPT (GPT-4) to assist in:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Improving Tailwind CSS layout and responsiveness.
+- Implementing **TypeScript types** for props, API responses, and course data
 
-## Deploy on Vercel
+### Example Prompts Used:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1️⃣ "Provide TypeScript types for course details and the summary response structure."  
+2️⃣ "Suggest Tailwind CSS classes for a clean course details layout with a summary section."
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run App: npm run dev

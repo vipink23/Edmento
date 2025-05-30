@@ -1,7 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
-const Header = () => {
+export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,7 +12,7 @@ const Header = () => {
   return (
     <nav className="relative">
       <div className="flex justify-between items-center px-8 py-4 bg-gray-50">
-        <div className="text-blue-900 font-bold text-3xl">EDMENTO LEARNING</div>
+        <Link className="text-blue-900 font-bold text-3xl" href={"/Dashboard"}>EDMENTO LEARNING</Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6">
@@ -46,4 +47,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+

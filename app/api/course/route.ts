@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server"
+import { COURSE } from "@/app/utils"
 
-type COURSE ={
-   id : number;
-   title : string;
-   description : string;
-   initialProgress : number
-}
 
 export const course : COURSE[] =[
 {
@@ -78,6 +73,24 @@ export const course : COURSE[] =[
 ]
 
 
-export async function GET (){
-    return await NextResponse.json(course)
+export async function GET() {
+  return NextResponse.json(course, { status: 200 });
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const { id } = await request.json();
+
+    const courseItem = course.find((c) => c.id === Number(id));
+
+    if (courseItem) {
+      courseItem.initialProgress = 100;
+      return NextResponse.json({ message: "Progress updated", courseItem });
+    }
+
+    return NextResponse.json({ message: "Course not found" }, { status: 404 });
+  } catch (error) {
+    console.error("PATCH error:", error);
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  }
 }
